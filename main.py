@@ -10,6 +10,7 @@ from threading import Thread
 from threading import Timer
 from datetime import datetime
 from urllib.request import urlopen
+from tqdm import tqdm
 import requests
 import re
 import json
@@ -17,97 +18,7 @@ import webbrowser
 import sys
 import os
 
-TAB_ALL = [
-    [1, "Orb of Alteration"],
-    [2, "Orb of Fusing"],
-    [3, "Orb of Alchemy"],
-    [4, "Chaos Orb"],
-    [5, "Gemcutter's Prism"],
-    [6, "Exalted Orb"],
-    [7, "Chromatic Orb"],
-    [8, "Jeweller's Orb"],
-    [9, "Orb of Chance"],
-    [10, "Cartographer's Chisel"],
-    [11, "Orb of Scouring"],
-    [12, "Blessed Orb"],
-    [13, "Orb of Regret"],
-    [14, "Regal Orb"],
-    [15, "Divine Orb"],
-    [16, "Vaal Orb"],
-    [17, "Scroll of Wisdom"],
-    [18, "Portal Scroll"],
-    [19, "Armourer's Scrap"],
-    [20, "Blacksmith's Whetstone"],
-    [21, "Glassblower's Bauble"],
-    [22, "Orb of Transmutation"],
-    [23, "Orb of Augmentation"],
-    [24, "Mirror of Kalandra"],
-    [25, "Eternal Orb"],
-    [26, "Perandus Coin"],
-    [35, "Silver Coin"],
-    [27, "Sacrifice at Dusk"],
-    [28, "Sacrifice at Midnight"],
-    [29, "Sacrifice at Dawn"],
-    [30, "Sacrifice at Noon"],
-    [31, "Mortal Grief"],
-    [32, "Mortal Rage"],
-    [33, "Mortal Hope"],
-    [34, "Mortal Ignorance"],
-    [36, "Eber's Key"],
-    [37, "Yriel's Key"],
-    [38, "Inya's Key"],
-    [39, "Volkuur's Key"],
-    [40, "Offering to the Goddess"],
-    [41, "Fragment of the Hydra"],
-    [42, "Fragment of the Phoenix"],
-    [43, "Fragment of the Minotaur"],
-    [44, "Fragment of the Chimera"],
-    [45, "Apprentice Cartographer's Sextant"],
-    [46, "Journeyman Cartographer's Sextant"],
-    [47, "Master Cartographer's Sextant"],
-    [48, "Sacrifice set"],
-    [49, "Mortal set"],
-    [50, "Pale Court set"],
-    [51, "Shaper set"],
-    [52, "Splinter of Xoph"],
-    [53, "Splinter of Tul"],
-    [54, "Splinter of Esh"],
-    [55, "Splinter of Uul-Netol"],
-    [56, "Splinter of Chayula"],
-    [57, "Blessing of Xoph"],
-    [58, "Blessing of Tul"],
-    [59, "Blessing of Esh"],
-    [60, "Blessing of Uul-Netol"],
-    [61, "Blessing of Chayula"],
-    [62, "Xoph's Breachstone"],
-    [63, "Tul's Breachstone"],
-    [64, "Esh's Breachstone"],
-    [65, "Uul-Netol's Breachstone"],
-    [66, "Chayula's Breachstone"],
-    [494, "Ancient Reliquary Key"],
-    [512, "Divine Vessel"],
-    [513, "Orb of Annulment"],
-    [514, "Orb of Binding"],
-    [515, "Orb of Horizons"],
-    [516, "Harbinger's Orb"],
-    [517, "Engineer's Orb"],
-    [518, "Ancient Orb"],
-    [519, "Annulment Shard"],
-    [520, "Mirror Shard"],
-    [521, "Exalted Shard"]]
-
-tab_item = [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-    [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
-    [31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
-    [41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
-    [51, 52, 53, 54, 55, 56, 57, 58, 59, 60],
-    [61, 62, 63, 64, 65, 66, 494, 512, 513, 514],
-    [515, 516, 517, 518, 519, 520, 521, 0, 0, 0],
-]
-
-tk_im = []
+from settings import *
 
 
 def printf(text):
@@ -150,7 +61,7 @@ class Result():
                     t = self.get_result(j, i)[0][0]/self.get_result(j, i)[0][1]
                     if r * t > 1.0:
                         self.winner.append([r * t, i, j])
-                        printf('W : i_{} j_{} r*t_{}'.format(i, j, r * t))
+                        # printf('W : i_{} j_{} r*t_{}'.format(i, j, r * t))
                         effectiv = True
         if effectiv:
             self.winner.sort()
@@ -191,7 +102,7 @@ def findOccurences(league, want, have):
         inter = inter[inter.find(' ')+1:]
         l2 = inter[:inter.find('<')]
         tab.append([float(l1), float(l2)])
-        print("{}, {}, {}".format(l1, l2, st))
+        # print("{}, {}, {}".format(l1, l2, st))
     return tab
 
 
@@ -545,7 +456,7 @@ class Gui():
             len(allLink),
             maxThread,
             str(float(len(allLink) / maxThread))[:4]))
-        for i in range(ceil(len(allLink) / maxThread)):
+        for i in tqdm(range(ceil(len(allLink) / maxThread))):
             for j in range(maxThread):
                 nowIdx = j + i * maxThread
                 if nowIdx < len(allLink):
@@ -561,10 +472,10 @@ class Gui():
             for j in range(maxThread):
                 nowIdx = j + i * maxThread
                 if nowIdx < len(allLink):
-                    printf(
-                        '{:>4}% thread_{} joined'
-                        .format(str(100 * (nowIdx + 1) / len(allLink))[:4],
-                                nowIdx))
+                    # printf(
+                    #     '{:>4}% thread_{} joined'
+                    #     .format(str(100 * (nowIdx + 1) / len(allLink))[:4],
+                    #             nowIdx))
                     self.set_pb((nowIdx + 1) / len(allLink))
                     self.root.update_idletasks()
                     thread[nowIdx].join()
@@ -578,8 +489,8 @@ class Gui():
             self.winner_loaded = number
             allLink = generateLink(self.enabled_items)
             best = result.winner[number]
-            printf(result.winner)
-            printf(best)
+            # printf(result.winner)
+            # printf(best)
             self.print_result(allLink, best[1:], self.log1)
             self.print_result(allLink, best[1:][::-1], self.log2)
             self.winner_tab[0].config(image=getImg(best[2] - 1))
