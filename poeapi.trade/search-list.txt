@@ -1,0 +1,59 @@
+Type Filters
+Item Category
+Item Rarity
+
+Weapon Filters
+Damage
+Attacks per Second
+Critical Chance
+Damage per Second
+Physical DPS
+Elemental DPS
+
+Armour Filters
+Armour
+Evasion
+Energy Shield
+Block
+
+Socket Filters
+Sockets
+Links
+
+Requirements
+Level
+Strength
+Dexterity
+Intelligence
+
+Map Filters
+Map Tier
+Map IIQ
+Map IIR
+Map Packsize
+Shaper / Elder Map
+Map Series
+
+Miscellaneous
+Quality
+Item Level
+Gem Level
+Gem Experience %
+Shaper Item
+Elder Item
+Fractured Item
+Synthesised Item
+Alternate Art
+Identified
+Corrupted
+Mirrored
+Crafted
+Veiled
+Enchanted
+Talisman Tier
+
+Trade Filters
+Seller Account
+Listed
+Sale Type
+Buyout Price

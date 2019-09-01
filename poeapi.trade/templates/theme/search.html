@@ -1,0 +1,26 @@
+{% extends 'theme/page.html' %}
+
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Search</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+    </div>
+      
+    <p class="lead"><span class="badge info-color p-2">Data range</span></p>
+    <select class="mdb-select colorful-select dropdown-info md-form">
+      <option value="" disabled selected>Choose time period</option>
+      <option value="1">Today</option>
+      <option value="2">Yesterday</option>
+      <option value="3">Last 7 days</option>
+      <option value="3">Last 30 days</option>
+      <option value="3">Last week</option>
+      <option value="3">Last month</option>
+    </select>
+</div>
+<!-- /.container-fluid -->
+{% endblock %}
